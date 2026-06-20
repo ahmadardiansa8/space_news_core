@@ -11,25 +11,17 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() =>
-      _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState
-    extends State<LoginScreen> {
-
-  final emailController =
-      TextEditingController();
-
-  final passwordController =
-      TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   bool isLoading = false;
 
   Future<void> login() async {
-
     try {
-
       setState(() {
         isLoading = true;
       });
@@ -49,19 +41,13 @@ class _LoginScreenState
           builder: (_) => const HomeScreen(),
         ),
       );
-
     } catch (e) {
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            e.toString(),
-          ),
+          content: Text(e.toString()),
         ),
       );
-
     } finally {
-
       setState(() {
         isLoading = false;
       });
@@ -69,90 +55,119 @@ class _LoginScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
+        centerTitle: true,
       ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
 
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+              const SizedBox(height: 30),
 
-        child: Column(
-          children: [
-
-            const SizedBox(height: 30),
-
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: "Email",
-                border: OutlineInputBorder(),
+              // ================= LOGO =================
+              Image.asset(
+                'assets/images/E-COMMERCE.jpg',
+                height: 120,
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder(),
+              const Text(
+                "E-COMMERCE",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
 
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
+              const SizedBox(height: 30),
+
+              // ================= EMAIL =================
+              TextField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: "Email",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // ================= PASSWORD =================
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: "Password",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+
+              // ================= FORGOT PASSWORD =================
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ForgotPasswordScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text("Forgot Password?"),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              // ================= LOGIN BUTTON =================
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: isLoading ? null : login,
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text("Login"),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              // ================= REGISTER =================
+              TextButton(
                 onPressed: () {
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          const ForgotPasswordScreen(),
+                      builder: (_) => const RegisterScreen(),
                     ),
                   );
                 },
-                child: const Text(
-                  "Forgot Password?",
-                ),
+                child: const Text("Belum punya akun? Daftar"),
               ),
-            ),
-
-            const SizedBox(height: 10),
-
-            SizedBox(
-              width: double.infinity,
-
-              child: ElevatedButton(
-                onPressed:
-                    isLoading ? null : login,
-
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text("Login"),
-              ),
-            ),
-
-            TextButton(
-              onPressed: () {
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const RegisterScreen(),
-                  ),
-                );
-              },
-              child: const Text(
-                "Belum punya akun? Daftar",
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
