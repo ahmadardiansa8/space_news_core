@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "97249007134",
+    "project_id": "spacenewscore-55e6d",
+    "storage_bucket": "spacenewscore-55e6d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97249007134:android:43ee1b2b6856a74325400f",
+        "android_client_info": {
+          "package_name": "com.example.spacenews_core"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcID3qtPCAkQyJ2Ofnx8soKjoBiZF4HIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
